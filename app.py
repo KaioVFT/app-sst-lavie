@@ -322,9 +322,11 @@ def inject_custom_css():
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         html, body, [class*="css"] { font-family: 'Inter', sans-serif; background-color: #0a0a0a; }
+        [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child { background-color: #050505 !important; border-right: 1px solid rgba(227, 112, 38, 0.2) !important; }
+        [data-testid="stHeader"] { background-color: transparent !important; }
         .stApp { background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); color: #e4e4e7 !important; }
         .block-container { padding-top: 2rem !important; padding-bottom: 3rem !important; max-width: 1400px; }
-        #MainMenu, footer, header { visibility: hidden; }
+        #MainMenu, footer { visibility: hidden; }
         button[kind="header"], [data-testid="StyledFullScreenButton"] { display: none !important; visibility: hidden !important; }
         [data-testid="collapsedControl"] { background-color: #050505 !important; border: 1px solid rgba(227, 112, 38, 0.2) !important; border-radius: 8px !important; top: 15px !important; left: 15px !important; z-index: 999999 !important; display: flex !important; visibility: visible !important; }
         [data-testid="collapsedControl"] svg { fill: #E37026 !important; color: #E37026 !important; }
