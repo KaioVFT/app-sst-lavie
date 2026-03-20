@@ -1,0 +1,11 @@
+streamlit
+httpx
+gspread
+google-auth
+fpdf2
+numpy
+Pillow
+streamlit-option-menu
+streamlit-drawable-canvas
+st-gsheets-connection
+google-api-python-client
