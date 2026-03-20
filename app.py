@@ -805,13 +805,13 @@ def render_acomp_editar():
                         planilha = conectar_planilha(nome_aba)
                         planilha.update(f"A{linha_idx}", [novos_dados])
                         st.cache_data.clear()
-                        st.markdown('<div style="background-color: rgba(227, 112, 38, 0.1); border-left: 4px solid #E37026; padding: 15px; color: #E37026; border-radius: 5px; margin-bottom: 1rem;"><strong>⚠️ Sucesso:</strong> Registro atualizado! Clique em <b>Sincronizar Base</b>.</div>', unsafe_allow_html=True)
+                        st.markdown('<div style="background-color: rgba(227, 112, 38, 0.1); border-left: 4px solid #E37026; padding: 15px; color: #E37026; border-radius: 5px; margin-bottom: 1rem;"><strong>Sucesso:</strong> Registro atualizado! Clique em <b>Sincronizar Base</b>.</div>', unsafe_allow_html=True)
                 if submit_excluir:
                     with st.spinner("A excluir a linha do Google Sheets..."):
                         planilha = conectar_planilha(nome_aba)
                         planilha.delete_rows(linha_idx)
                         st.cache_data.clear()
-                        st.markdown('<div style="background-color: rgba(227, 112, 38, 0.1); border-left: 4px solid #E37026; padding: 15px; color: #E37026; border-radius: 5px; margin-bottom: 1rem;"><strong>⚠️ Sucesso:</strong> Registro excluído! Clique em <b>Sincronizar Base</b>.</div>', unsafe_allow_html=True)
+                        st.markdown('<div style="background-color: rgba(227, 112, 38, 0.1); border-left: 4px solid #E37026; padding: 15px; color: #E37026; border-radius: 5px; margin-bottom: 1rem;"><strong>Sucesso:</strong> Registro excluído! Clique em <b>Sincronizar Base</b>.</div>', unsafe_allow_html=True)
 
 def render_acomp_gerar_pdf():
     st.header("GERAR PDF", divider="orange")
@@ -933,6 +933,7 @@ def render_acomp_gerar_pdf():
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 def app():
     inject_custom_css()
+    st.sidebar.markdown(" ") # Evita que a sidebar feche na tela de login
     if 'autenticado' not in st.session_state: st.session_state['autenticado'] = False
     if not st.session_state['autenticado']: render_login()
     else:
