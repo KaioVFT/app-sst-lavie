@@ -17,8 +17,7 @@ from streamlit_drawable_canvas import st_canvas
 st.set_page_config(
     page_title="Lavie SST",
     page_icon="assets/icon.png",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    layout="wide"
 )
 
 # ─────────────────────────────────────────────
@@ -933,7 +932,6 @@ def render_acomp_gerar_pdf():
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 def app():
     inject_custom_css()
-    st.sidebar.markdown(" ") # Evita que a sidebar feche na tela de login
     if 'autenticado' not in st.session_state: st.session_state['autenticado'] = False
     if not st.session_state['autenticado']: render_login()
     else:
