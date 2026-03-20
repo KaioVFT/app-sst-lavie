@@ -17,7 +17,8 @@ from streamlit_drawable_canvas import st_canvas
 st.set_page_config(
     page_title="Lavie SST",
     page_icon="assets/icon.png",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # ─────────────────────────────────────────────
@@ -935,6 +936,19 @@ def app():
     if 'autenticado' not in st.session_state: st.session_state['autenticado'] = False
     if not st.session_state['autenticado']: render_login()
     else:
+        import streamlit.components.v1 as components
+        components.html(
+            """
+            <script>
+            var sidebar = window.parent.document.querySelector('[data-testid="stSidebar"]');
+            if (sidebar && sidebar.getAttribute("aria-expanded") === "false") {
+                var btn = window.parent.document.querySelector('[data-testid="collapsedControl"]');
+                if (btn) btn.click();
+            }
+            </script>
+            """, height=0, width=0
+        )
+        
         if 'prev_menu_cadastro' not in st.session_state: st.session_state.prev_menu_cadastro = 'ENTREGA DE EPI'
         if 'prev_menu_acomp' not in st.session_state: st.session_state.prev_menu_acomp = 'OBRA'
         if 'active_view' not in st.session_state: st.session_state.active_view = 'ENTREGA DE EPI'
