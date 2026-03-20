@@ -323,8 +323,6 @@ def inject_custom_css():
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         html, body, [class*="css"] { font-family: 'Inter', sans-serif; background-color: #0a0a0a; }
         .stApp { background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); color: #e4e4e7 !important; }
-        [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child { background-color: #050505 !important; border-right: 1px solid rgba(227, 112, 38, 0.2) !important; }
-        [data-testid="stHeader"] { background-color: transparent !important; }
         .block-container { padding-top: 2rem !important; padding-bottom: 3rem !important; max-width: 1400px; }
         #MainMenu, footer, header { visibility: hidden; }
         button[kind="header"], [data-testid="StyledFullScreenButton"] { display: none !important; visibility: hidden !important; }
