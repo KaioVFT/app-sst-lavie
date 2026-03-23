@@ -181,7 +181,7 @@ def injetar_assinatura_dupla(pdf, caminho_img1, titulo1, caminho_img2, titulo2):
     pdf.cell(95, 8, titulo2, ln=True, align='C')
 
 def criar_pdf_epi(obra, nome, funcao, data, epi, qtd, ca, img_assinatura, img_foto=None, pdf_batch=None):
-    pdf = FPDF()
+    pdf = pdf_batch if pdf_batch is not None else FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE ENTREGA DE EQUIPAMENTO DE PROTECAO INDIVIDUAL")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -211,10 +211,11 @@ def criar_pdf_epi(obra, nome, funcao, data, epi, qtd, ca, img_assinatura, img_fo
             pdf.set_font("Arial", '', 10)
             pdf.cell(0, 10, "(Erro ao processar imagem baixada da nuvem.)", ln=True, align='C')
             
-    return pdf.output()
+    if pdf_batch is None: 
+        return pdf.output()
 
 def criar_pdf_cesta(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
-    pdf = FPDF()
+    pdf = pdf_batch if pdf_batch is not None else FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE ENTREGA DE CESTA BASICA")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -222,10 +223,11 @@ def criar_pdf_cesta(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
     pdf.set_font("Arial", 'I', 10)
     pdf.multi_cell(0, 6, termo)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Colaborador")
-    return pdf.output()
+    if pdf_batch is None: 
+        return pdf.output()
 
 def criar_pdf_armario(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
-    pdf = FPDF()
+    pdf = pdf_batch if pdf_batch is not None else FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE ENTREGA DE ARMARIO E CADEADO")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -233,10 +235,11 @@ def criar_pdf_armario(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
     pdf.set_font("Arial", 'I', 10)
     pdf.multi_cell(0, 6, termo)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Colaborador")
-    return pdf.output()
+    if pdf_batch is None: 
+        return pdf.output()
 
 def criar_pdf_fardamento(obra, nome, funcao, item_fard, qtd, data, img_assinatura, pdf_batch=None):
-    pdf = FPDF()
+    pdf = pdf_batch if pdf_batch is not None else FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE ENTREGA DE FARDAMENTO")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -247,10 +250,11 @@ def criar_pdf_fardamento(obra, nome, funcao, item_fard, qtd, data, img_assinatur
     pdf.set_font("Arial", 'I', 10)
     pdf.multi_cell(0, 6, termo)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Colaborador")
-    return pdf.output()
+    if pdf_batch is None: 
+        return pdf.output()
 
 def criar_pdf_os(obra, nome, funcao, data_inicio, texto_os, data_emissao, img_ass1, img_ass2, pdf_batch=None):
-    pdf = FPDF()
+    pdf = pdf_batch if pdf_batch is not None else FPDF()
     desenhar_cabecalho_pdf(pdf, "ORDEM DE SERVICO - SST")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data_emissao)
     
@@ -262,10 +266,11 @@ def criar_pdf_os(obra, nome, funcao, data_inicio, texto_os, data_emissao, img_as
     pdf.set_font("Arial", '', 9)
     pdf.multi_cell(0, 5, texto_os)
     injetar_assinatura_dupla(pdf, img_ass1, "Assinatura do Funcionario", img_ass2, "Responsavel de Seguranca")
-    return pdf.output()
+    if pdf_batch is None: 
+        return pdf.output()
 
 def criar_pdf_integracao(obra, nome, funcao, data, texto_integracao, img_ass1, img_ass2, pdf_batch=None):
-    pdf = FPDF()
+    pdf = pdf_batch if pdf_batch is not None else FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE INTEGRACAO DE SEGURANCA - NR 18")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -274,10 +279,11 @@ def criar_pdf_integracao(obra, nome, funcao, data, texto_integracao, img_ass1, i
     pdf.set_font("Arial", '', 9)
     pdf.multi_cell(0, 5, texto_integracao)
     injetar_assinatura_dupla(pdf, img_ass1, "Assinatura do Funcionario", img_ass2, "Gestor de Obras")
-    return pdf.output()
+    if pdf_batch is None: 
+        return pdf.output()
 
 def criar_pdf_treinamento(descricao, instrutor, data_realizacao, local, carga, validade, nome_func, funcao_func, img_assinatura, pdf_batch=None):
-    pdf = FPDF()
+    pdf = pdf_batch if pdf_batch is not None else FPDF()
     desenhar_cabecalho_pdf(pdf, "ATA DE TREINAMENTO / DDS")
     pdf.set_font("Arial", '', 11)
     pdf.cell(0, 7, f"TEMA / DESCRICAO: {descricao}", ln=True)
@@ -292,7 +298,8 @@ def criar_pdf_treinamento(descricao, instrutor, data_realizacao, local, carga, v
     pdf.cell(0, 8, f"Nome: {nome_func}", ln=True)
     pdf.cell(0, 8, f"Funcao: {funcao_func}", ln=True)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Participante")
-    return pdf.output()
+    if pdf_batch is None: 
+        return pdf.output()
 
 # ─────────────────────────────────────────────
 # BANCO DE DADOS E LISTAS
@@ -854,7 +861,7 @@ def render_acomp_gerar_pdf():
                 
             lista_obras = ["Todas as Obras"] + sorted(list(obras_cadastradas))
             obra_selecionada = st.selectbox("SELECIONE A OBRA", lista_obras, label_visibility="collapsed")
-            btn_lote = st.button("GERAR PDF DA OBRA", use_container_width=True)
+            btn_lote = st.button("RECONSTRUIR PDF DA OBRA", use_container_width=True)
 
         pdf_final_bytes = None
         nome_arquivo_final = ""
