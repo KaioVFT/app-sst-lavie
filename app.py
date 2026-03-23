@@ -180,8 +180,8 @@ def injetar_assinatura_dupla(pdf, caminho_img1, titulo1, caminho_img2, titulo2):
     pdf.cell(95, 8, titulo1, ln=False, align='C')
     pdf.cell(95, 8, titulo2, ln=True, align='C')
 
-def criar_pdf_epi(obra, nome, funcao, data, epi, qtd, ca, img_assinatura, img_foto=None, pdf_batch=None):
-    pdf = pdf_batch if pdf_batch else FPDF()
+def criar_pdf_epi(obra, nome, funcao, data, epi, qtd, ca, img_assinatura, img_foto=None):
+    pdf = FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE ENTREGA DE EQUIPAMENTO DE PROTECAO INDIVIDUAL")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -211,10 +211,10 @@ def criar_pdf_epi(obra, nome, funcao, data, epi, qtd, ca, img_assinatura, img_fo
             pdf.set_font("Arial", '', 10)
             pdf.cell(0, 10, "(Erro ao processar imagem baixada da nuvem.)", ln=True, align='C')
             
-    if not pdf_batch: return pdf.output()
+    return pdf.output()
 
-def criar_pdf_cesta(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
-    pdf = pdf_batch if pdf_batch else FPDF()
+def criar_pdf_cesta(obra, nome, funcao, data, img_assinatura):
+    pdf = FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE ENTREGA DE CESTA BASICA")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -222,11 +222,10 @@ def criar_pdf_cesta(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
     pdf.set_font("Arial", 'I', 10)
     pdf.multi_cell(0, 6, termo)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Colaborador")
-    
-    if not pdf_batch: return pdf.output()
+    return pdf.output()
 
-def criar_pdf_armario(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
-    pdf = pdf_batch if pdf_batch else FPDF()
+def criar_pdf_armario(obra, nome, funcao, data, img_assinatura):
+    pdf = FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE ENTREGA DE ARMARIO E CADEADO")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -234,11 +233,10 @@ def criar_pdf_armario(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
     pdf.set_font("Arial", 'I', 10)
     pdf.multi_cell(0, 6, termo)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Colaborador")
-    
-    if not pdf_batch: return pdf.output()
+    return pdf.output()
 
-def criar_pdf_fardamento(obra, nome, funcao, item_fard, qtd, data, img_assinatura, pdf_batch=None):
-    pdf = pdf_batch if pdf_batch else FPDF()
+def criar_pdf_fardamento(obra, nome, funcao, item_fard, qtd, data, img_assinatura):
+    pdf = FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE ENTREGA DE FARDAMENTO")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -249,11 +247,10 @@ def criar_pdf_fardamento(obra, nome, funcao, item_fard, qtd, data, img_assinatur
     pdf.set_font("Arial", 'I', 10)
     pdf.multi_cell(0, 6, termo)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Colaborador")
-    
-    if not pdf_batch: return pdf.output()
+    return pdf.output()
 
-def criar_pdf_os(obra, nome, funcao, data_inicio, texto_os, data_emissao, img_ass1, img_ass2, pdf_batch=None):
-    pdf = pdf_batch if pdf_batch else FPDF()
+def criar_pdf_os(obra, nome, funcao, data_inicio, texto_os, data_emissao, img_ass1, img_ass2):
+    pdf = FPDF()
     desenhar_cabecalho_pdf(pdf, "ORDEM DE SERVICO - SST")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data_emissao)
     
@@ -265,11 +262,10 @@ def criar_pdf_os(obra, nome, funcao, data_inicio, texto_os, data_emissao, img_as
     pdf.set_font("Arial", '', 9)
     pdf.multi_cell(0, 5, texto_os)
     injetar_assinatura_dupla(pdf, img_ass1, "Assinatura do Funcionario", img_ass2, "Responsavel de Seguranca")
-    
-    if not pdf_batch: return pdf.output()
+    return pdf.output()
 
-def criar_pdf_integracao(obra, nome, funcao, data, texto_integracao, img_ass1, img_ass2, pdf_batch=None):
-    pdf = pdf_batch if pdf_batch else FPDF()
+def criar_pdf_integracao(obra, nome, funcao, data, texto_integracao, img_ass1, img_ass2):
+    pdf = FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE INTEGRACAO DE SEGURANCA - NR 18")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -278,11 +274,10 @@ def criar_pdf_integracao(obra, nome, funcao, data, texto_integracao, img_ass1, i
     pdf.set_font("Arial", '', 9)
     pdf.multi_cell(0, 5, texto_integracao)
     injetar_assinatura_dupla(pdf, img_ass1, "Assinatura do Funcionario", img_ass2, "Gestor de Obras")
-    
-    if not pdf_batch: return pdf.output()
+    return pdf.output()
 
-def criar_pdf_treinamento(descricao, instrutor, data_realizacao, local, carga, validade, nome_func, funcao_func, img_assinatura, pdf_batch=None):
-    pdf = pdf_batch if pdf_batch else FPDF()
+def criar_pdf_treinamento(descricao, instrutor, data_realizacao, local, carga, validade, nome_func, funcao_func, img_assinatura):
+    pdf = FPDF()
     desenhar_cabecalho_pdf(pdf, "ATA DE TREINAMENTO / DDS")
     pdf.set_font("Arial", '', 11)
     pdf.cell(0, 7, f"TEMA / DESCRICAO: {descricao}", ln=True)
@@ -297,8 +292,7 @@ def criar_pdf_treinamento(descricao, instrutor, data_realizacao, local, carga, v
     pdf.cell(0, 8, f"Nome: {nome_func}", ln=True)
     pdf.cell(0, 8, f"Funcao: {funcao_func}", ln=True)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Participante")
-    
-    if not pdf_batch: return pdf.output()
+    return pdf.output()
 
 # ─────────────────────────────────────────────
 # BANCO DE DADOS E LISTAS
@@ -328,11 +322,11 @@ def inject_custom_css():
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         html, body, [class*="css"] { font-family: 'Inter', sans-serif; background-color: #0a0a0a; }
-        .stApp { background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); color: #e4e4e7 !important; }
         [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child { background-color: #050505 !important; border-right: 1px solid rgba(227, 112, 38, 0.2) !important; }
         [data-testid="stHeader"] { background-color: transparent !important; }
+        .stApp { background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); color: #e4e4e7 !important; }
         .block-container { padding-top: 2rem !important; padding-bottom: 3rem !important; max-width: 1400px; }
-        #MainMenu, footer, header { visibility: hidden; }
+        #MainMenu, footer { visibility: hidden; }
         button[kind="header"], [data-testid="StyledFullScreenButton"] { display: none !important; visibility: hidden !important; }
         [data-testid="collapsedControl"] { background-color: #050505 !important; border: 1px solid rgba(227, 112, 38, 0.2) !important; border-radius: 8px !important; top: 15px !important; left: 15px !important; z-index: 999999 !important; display: flex !important; visibility: visible !important; }
         [data-testid="collapsedControl"] svg { fill: #E37026 !important; color: #E37026 !important; }
@@ -997,9 +991,23 @@ def _processar_linha_pdf(nome_aba, linha, pdf_batch=None):
 # APP PRINCIPAL E NAVEGAÇÃO
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 def app():
+    inject_custom_css()
     if 'autenticado' not in st.session_state: st.session_state['autenticado'] = False
     if not st.session_state['autenticado']: render_login()
     else:
+        import streamlit.components.v1 as components
+        components.html(
+            """
+            <script>
+            var sidebar = window.parent.document.querySelector('[data-testid="stSidebar"]');
+            if (sidebar && sidebar.getAttribute("aria-expanded") === "false") {
+                var btn = window.parent.document.querySelector('[data-testid="collapsedControl"]');
+                if (btn) btn.click();
+            }
+            </script>
+            """, height=0, width=0
+        )
+        
         if 'prev_menu_cadastro' not in st.session_state: st.session_state.prev_menu_cadastro = 'ENTREGA DE EPI'
         if 'prev_menu_acomp' not in st.session_state: st.session_state.prev_menu_acomp = 'OBRA'
         if 'active_view' not in st.session_state: st.session_state.active_view = 'ENTREGA DE EPI'
@@ -1017,7 +1025,7 @@ def app():
             try: st.image('assets/logo.png', use_container_width=True)
             except: pass
             st.markdown("")
-            st.markdown('<div class="sidebar-logo-container"><div class="sidebar-logo-text">SST</div><div class="sidebar-logo-sub">Segurança do Trabalho</div></div>', unsafe_allow_html=True)
+            st.markdown('<div class="sidebar-logo-container"><div class="sidebar-logo-text">SST</div><div class="sidebar-logo-sub">Segurança e Saúde do Trabalho</div></div>', unsafe_allow_html=True)
             st.markdown("")
 
             menu_cadastro = option_menu(
@@ -1043,7 +1051,7 @@ def app():
                 st.session_state['autenticado'] = False
                 st.cache_data.clear() # Limpa os dados se fizer logout
                 st.rerun()
-            st.markdown('<p class="sidebar-footer">Lavie Core Enterprise v2.5</p>', unsafe_allow_html=True)
+            st.markdown('<p class="sidebar-footer">Lavie Construções e Incorporações</p>', unsafe_allow_html=True)
 
         if menu_cadastro != st.session_state.prev_menu_cadastro or menu_acomp != st.session_state.prev_menu_acomp:
             st.session_state.active_view = menu_cadastro if menu_cadastro != st.session_state.prev_menu_cadastro else menu_acomp
