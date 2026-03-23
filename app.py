@@ -222,7 +222,6 @@ def criar_pdf_cesta(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
     pdf.set_font("Arial", 'I', 10)
     pdf.multi_cell(0, 6, termo)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Colaborador")
-    
     if not pdf_batch: return pdf.output()
 
 def criar_pdf_armario(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
@@ -234,7 +233,6 @@ def criar_pdf_armario(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
     pdf.set_font("Arial", 'I', 10)
     pdf.multi_cell(0, 6, termo)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Colaborador")
-    
     if not pdf_batch: return pdf.output()
 
 def criar_pdf_fardamento(obra, nome, funcao, item_fard, qtd, data, img_assinatura, pdf_batch=None):
@@ -249,7 +247,6 @@ def criar_pdf_fardamento(obra, nome, funcao, item_fard, qtd, data, img_assinatur
     pdf.set_font("Arial", 'I', 10)
     pdf.multi_cell(0, 6, termo)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Colaborador")
-    
     if not pdf_batch: return pdf.output()
 
 def criar_pdf_os(obra, nome, funcao, data_inicio, texto_os, data_emissao, img_ass1, img_ass2, pdf_batch=None):
@@ -265,7 +262,6 @@ def criar_pdf_os(obra, nome, funcao, data_inicio, texto_os, data_emissao, img_as
     pdf.set_font("Arial", '', 9)
     pdf.multi_cell(0, 5, texto_os)
     injetar_assinatura_dupla(pdf, img_ass1, "Assinatura do Funcionario", img_ass2, "Responsavel de Seguranca")
-    
     if not pdf_batch: return pdf.output()
 
 def criar_pdf_integracao(obra, nome, funcao, data, texto_integracao, img_ass1, img_ass2, pdf_batch=None):
@@ -278,7 +274,6 @@ def criar_pdf_integracao(obra, nome, funcao, data, texto_integracao, img_ass1, i
     pdf.set_font("Arial", '', 9)
     pdf.multi_cell(0, 5, texto_integracao)
     injetar_assinatura_dupla(pdf, img_ass1, "Assinatura do Funcionario", img_ass2, "Gestor de Obras")
-    
     if not pdf_batch: return pdf.output()
 
 def criar_pdf_treinamento(descricao, instrutor, data_realizacao, local, carga, validade, nome_func, funcao_func, img_assinatura, pdf_batch=None):
@@ -297,7 +292,6 @@ def criar_pdf_treinamento(descricao, instrutor, data_realizacao, local, carga, v
     pdf.cell(0, 8, f"Nome: {nome_func}", ln=True)
     pdf.cell(0, 8, f"Funcao: {funcao_func}", ln=True)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Participante")
-    
     if not pdf_batch: return pdf.output()
 
 # ─────────────────────────────────────────────
@@ -332,7 +326,7 @@ def inject_custom_css():
         [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child { background-color: #050505 !important; border-right: 1px solid rgba(227, 112, 38, 0.2) !important; }
         [data-testid="stHeader"] { background-color: transparent !important; }
         .block-container { padding-top: 2rem !important; padding-bottom: 3rem !important; max-width: 1400px; }
-        #MainMenu, footer, header { visibility: hidden; }
+        #MainMenu, footer { visibility: hidden; }
         button[kind="header"], [data-testid="StyledFullScreenButton"] { display: none !important; visibility: hidden !important; }
         [data-testid="collapsedControl"] { background-color: #050505 !important; border: 1px solid rgba(227, 112, 38, 0.2) !important; border-radius: 8px !important; top: 15px !important; left: 15px !important; z-index: 999999 !important; display: flex !important; visibility: visible !important; }
         [data-testid="collapsedControl"] svg { fill: #E37026 !important; color: #E37026 !important; }
@@ -917,20 +911,20 @@ def render_acomp_gerar_pdf():
         for i, linha in enumerate(registros[1:], start=2):
             identificador = " - ".join(linha[:3]) if len(linha) >= 3 else f"Registro {i}"
             opcoes_registros.append(f"Linha {i} | {identificador}")
-            
+
         st.markdown("<br>", unsafe_allow_html=True)
         col1, col2 = st.columns(2)
         
         with col1:
             st.markdown("<div style='background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 10px; border: 1px solid rgba(227, 112, 38, 0.15); height: 100%;'>", unsafe_allow_html=True)
-            st.markdown("<h4 style='color:#E37026; font-size: 1rem;'>📄 Gerar Individual</h4>", unsafe_allow_html=True)
-            registro_selecionado = st.selectbox("SELECIONE O CADASTRO", opcoes_registros)
+            st.markdown("<h4 style='color:#E37026; font-size: 1rem;'>Gerar PDF Individual</h4>", unsafe_allow_html=True)
+            registro_selecionado = st.selectbox("2. SELECIONE O CADASTRO", opcoes_registros, label_visibility="collapsed")
             btn_gerar_individual = st.button("RECONSTRUIR ÚNICO", use_container_width=True)
             st.markdown("</div>", unsafe_allow_html=True)
             
         with col2:
             st.markdown("<div style='background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 10px; border: 1px solid rgba(227, 112, 38, 0.15); height: 100%;'>", unsafe_allow_html=True)
-            st.markdown("<h4 style='color:#E37026; font-size: 1rem;'>📚 Gerar Lote por Obra</h4>", unsafe_allow_html=True)
+            st.markdown("<h4 style='color:#E37026; font-size: 1rem;'>Gerar PDF por Obra</h4>", unsafe_allow_html=True)
             
             # Buscar obras únicas cadastradas neste módulo específico
             obras_cadastradas = set()
@@ -939,7 +933,7 @@ def render_acomp_gerar_pdf():
                 elif nome_aba == "OS" and len(linha) >= 3: obras_cadastradas.add(linha[2])
                 
             lista_obras = ["Todas as Obras"] + sorted(list(obras_cadastradas))
-            obra_selecionada = st.selectbox("SELECIONE A OBRA", lista_obras)
+            obra_selecionada = st.selectbox("SELECIONE A OBRA", lista_obras, label_visibility="collapsed")
             btn_lote = st.button("GERAR LOTE DA OBRA", use_container_width=True)
             st.markdown("</div>", unsafe_allow_html=True)
 
@@ -953,7 +947,7 @@ def render_acomp_gerar_pdf():
                 try:
                     pdf_final_bytes, nome_arquivo_final = _processar_linha_pdf(nome_aba, linha)
                 except Exception as e:
-                    st.error(f"Erro: {e}")
+                    st.error(f"Erro ao processar PDF: {e}")
 
         elif btn_lote:
             with st.spinner(f"A compilar lote de PDFs para '{obra_selecionada}'... Pode demorar alguns segundos."):
@@ -987,7 +981,7 @@ def render_acomp_gerar_pdf():
 
     if 'pdf_gerado_sob_demanda' in st.session_state:
         st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
-        st.success(f"✓ Documento '{st.session_state['nome_pdf_sob_demanda']}' gerado com sucesso.")
+        st.success("✓ Documento legal reconstruído com sucesso.")
         st.download_button("↓ BAIXAR DOCUMENTO (PDF)", data=st.session_state['pdf_gerado_sob_demanda'], file_name=st.session_state['nome_pdf_sob_demanda'], mime="application/pdf", use_container_width=True)
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -997,6 +991,19 @@ def app():
     if 'autenticado' not in st.session_state: st.session_state['autenticado'] = False
     if not st.session_state['autenticado']: render_login()
     else:
+        import streamlit.components.v1 as components
+        components.html(
+            """
+            <script>
+            var sidebar = window.parent.document.querySelector('[data-testid="stSidebar"]');
+            if (sidebar && sidebar.getAttribute("aria-expanded") === "false") {
+                var btn = window.parent.document.querySelector('[data-testid="collapsedControl"]');
+                if (btn) btn.click();
+            }
+            </script>
+            """, height=0, width=0
+        )
+        
         if 'prev_menu_cadastro' not in st.session_state: st.session_state.prev_menu_cadastro = 'ENTREGA DE EPI'
         if 'prev_menu_acomp' not in st.session_state: st.session_state.prev_menu_acomp = 'OBRA'
         if 'active_view' not in st.session_state: st.session_state.active_view = 'ENTREGA DE EPI'
@@ -1014,7 +1021,7 @@ def app():
             try: st.image('assets/logo.png', use_container_width=True)
             except: pass
             st.markdown("")
-            st.markdown('<div class="sidebar-logo-container"><div class="sidebar-logo-text">SST</div><div class="sidebar-logo-sub">Segurança do Trabalho</div></div>', unsafe_allow_html=True)
+            st.markdown('<div class="sidebar-logo-container"><div class="sidebar-logo-text">SST</div><div class="sidebar-logo-sub">Segurança e Saúde do Trabalho</div></div>', unsafe_allow_html=True)
             st.markdown("")
 
             menu_cadastro = option_menu(
@@ -1040,7 +1047,7 @@ def app():
                 st.session_state['autenticado'] = False
                 st.cache_data.clear() # Limpa os dados se fizer logout
                 st.rerun()
-            st.markdown('<p class="sidebar-footer">Lavie Core Enterprise v2.5</p>', unsafe_allow_html=True)
+            st.markdown('<p class="sidebar-footer">Lavie Construções e Incorporações</p>', unsafe_allow_html=True)
 
         if menu_cadastro != st.session_state.prev_menu_cadastro or menu_acomp != st.session_state.prev_menu_acomp:
             st.session_state.active_view = menu_cadastro if menu_cadastro != st.session_state.prev_menu_cadastro else menu_acomp
