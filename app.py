@@ -180,8 +180,8 @@ def injetar_assinatura_dupla(pdf, caminho_img1, titulo1, caminho_img2, titulo2):
     pdf.cell(95, 8, titulo1, ln=False, align='C')
     pdf.cell(95, 8, titulo2, ln=True, align='C')
 
-def criar_pdf_epi(obra, nome, funcao, data, epi, qtd, ca, img_assinatura, img_foto=None):
-    pdf = FPDF()
+def criar_pdf_epi(obra, nome, funcao, data, epi, qtd, ca, img_assinatura, img_foto=None, pdf_batch=None):
+    pdf = pdf_batch if pdf_batch else FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE ENTREGA DE EQUIPAMENTO DE PROTECAO INDIVIDUAL")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -211,10 +211,10 @@ def criar_pdf_epi(obra, nome, funcao, data, epi, qtd, ca, img_assinatura, img_fo
             pdf.set_font("Arial", '', 10)
             pdf.cell(0, 10, "(Erro ao processar imagem baixada da nuvem.)", ln=True, align='C')
             
-    return pdf.output()
+    if not pdf_batch: return pdf.output()
 
-def criar_pdf_cesta(obra, nome, funcao, data, img_assinatura):
-    pdf = FPDF()
+def criar_pdf_cesta(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
+    pdf = pdf_batch if pdf_batch else FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE ENTREGA DE CESTA BASICA")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -222,10 +222,11 @@ def criar_pdf_cesta(obra, nome, funcao, data, img_assinatura):
     pdf.set_font("Arial", 'I', 10)
     pdf.multi_cell(0, 6, termo)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Colaborador")
-    return pdf.output()
+    
+    if not pdf_batch: return pdf.output()
 
-def criar_pdf_armario(obra, nome, funcao, data, img_assinatura):
-    pdf = FPDF()
+def criar_pdf_armario(obra, nome, funcao, data, img_assinatura, pdf_batch=None):
+    pdf = pdf_batch if pdf_batch else FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE ENTREGA DE ARMARIO E CADEADO")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -233,10 +234,11 @@ def criar_pdf_armario(obra, nome, funcao, data, img_assinatura):
     pdf.set_font("Arial", 'I', 10)
     pdf.multi_cell(0, 6, termo)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Colaborador")
-    return pdf.output()
+    
+    if not pdf_batch: return pdf.output()
 
-def criar_pdf_fardamento(obra, nome, funcao, item_fard, qtd, data, img_assinatura):
-    pdf = FPDF()
+def criar_pdf_fardamento(obra, nome, funcao, item_fard, qtd, data, img_assinatura, pdf_batch=None):
+    pdf = pdf_batch if pdf_batch else FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE ENTREGA DE FARDAMENTO")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -247,10 +249,11 @@ def criar_pdf_fardamento(obra, nome, funcao, item_fard, qtd, data, img_assinatur
     pdf.set_font("Arial", 'I', 10)
     pdf.multi_cell(0, 6, termo)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Colaborador")
-    return pdf.output()
+    
+    if not pdf_batch: return pdf.output()
 
-def criar_pdf_os(obra, nome, funcao, data_inicio, texto_os, data_emissao, img_ass1, img_ass2):
-    pdf = FPDF()
+def criar_pdf_os(obra, nome, funcao, data_inicio, texto_os, data_emissao, img_ass1, img_ass2, pdf_batch=None):
+    pdf = pdf_batch if pdf_batch else FPDF()
     desenhar_cabecalho_pdf(pdf, "ORDEM DE SERVICO - SST")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data_emissao)
     
@@ -262,10 +265,11 @@ def criar_pdf_os(obra, nome, funcao, data_inicio, texto_os, data_emissao, img_as
     pdf.set_font("Arial", '', 9)
     pdf.multi_cell(0, 5, texto_os)
     injetar_assinatura_dupla(pdf, img_ass1, "Assinatura do Funcionario", img_ass2, "Responsavel de Seguranca")
-    return pdf.output()
+    
+    if not pdf_batch: return pdf.output()
 
-def criar_pdf_integracao(obra, nome, funcao, data, texto_integracao, img_ass1, img_ass2):
-    pdf = FPDF()
+def criar_pdf_integracao(obra, nome, funcao, data, texto_integracao, img_ass1, img_ass2, pdf_batch=None):
+    pdf = pdf_batch if pdf_batch else FPDF()
     desenhar_cabecalho_pdf(pdf, "TERMO DE INTEGRACAO DE SEGURANCA - NR 18")
     injetar_dados_colaborador_pdf(pdf, obra, nome, funcao, data)
     
@@ -274,10 +278,11 @@ def criar_pdf_integracao(obra, nome, funcao, data, texto_integracao, img_ass1, i
     pdf.set_font("Arial", '', 9)
     pdf.multi_cell(0, 5, texto_integracao)
     injetar_assinatura_dupla(pdf, img_ass1, "Assinatura do Funcionario", img_ass2, "Gestor de Obras")
-    return pdf.output()
+    
+    if not pdf_batch: return pdf.output()
 
-def criar_pdf_treinamento(descricao, instrutor, data_realizacao, local, carga, validade, nome_func, funcao_func, img_assinatura):
-    pdf = FPDF()
+def criar_pdf_treinamento(descricao, instrutor, data_realizacao, local, carga, validade, nome_func, funcao_func, img_assinatura, pdf_batch=None):
+    pdf = pdf_batch if pdf_batch else FPDF()
     desenhar_cabecalho_pdf(pdf, "ATA DE TREINAMENTO / DDS")
     pdf.set_font("Arial", '', 11)
     pdf.cell(0, 7, f"TEMA / DESCRICAO: {descricao}", ln=True)
@@ -292,7 +297,8 @@ def criar_pdf_treinamento(descricao, instrutor, data_realizacao, local, carga, v
     pdf.cell(0, 8, f"Nome: {nome_func}", ln=True)
     pdf.cell(0, 8, f"Funcao: {funcao_func}", ln=True)
     injetar_assinatura_simples(pdf, img_assinatura, "Assinatura do Participante")
-    return pdf.output()
+    
+    if not pdf_batch: return pdf.output()
 
 # ─────────────────────────────────────────────
 # BANCO DE DADOS E LISTAS
@@ -322,11 +328,11 @@ def inject_custom_css():
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         html, body, [class*="css"] { font-family: 'Inter', sans-serif; background-color: #0a0a0a; }
+        .stApp { background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); color: #e4e4e7 !important; }
         [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child { background-color: #050505 !important; border-right: 1px solid rgba(227, 112, 38, 0.2) !important; }
         [data-testid="stHeader"] { background-color: transparent !important; }
-        .stApp { background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); color: #e4e4e7 !important; }
         .block-container { padding-top: 2rem !important; padding-bottom: 3rem !important; max-width: 1400px; }
-        #MainMenu, footer { visibility: hidden; }
+        #MainMenu, footer, header { visibility: hidden; }
         button[kind="header"], [data-testid="StyledFullScreenButton"] { display: none !important; visibility: hidden !important; }
         [data-testid="collapsedControl"] { background-color: #050505 !important; border: 1px solid rgba(227, 112, 38, 0.2) !important; border-radius: 8px !important; top: 15px !important; left: 15px !important; z-index: 999999 !important; display: flex !important; visibility: visible !important; }
         [data-testid="collapsedControl"] svg { fill: #E37026 !important; color: #E37026 !important; }
@@ -638,6 +644,82 @@ def render_module_7():
                     except Exception as e: st.error(f"Erro ao salvar: {e}")
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# FUNÇÃO AUXILIAR PARA GERAR PDF (DRY)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+def _processar_linha_pdf(nome_aba, linha, pdf_batch=None):
+    pdf_bytes = None
+    nome_arquivo = f"Documento_{nome_aba}.pdf"
+    
+    # EPI: [Data, Obra, Nome, Funcao, EPI, Qtd, CA, B64_Ass, LinkFoto]
+    if nome_aba == "EPI":
+        data_str, obra, nome, funcao = linha[0], linha[1], linha[2], linha[3]
+        epi, qtd, ca = (linha[4] if len(linha)>4 else ""), (linha[5] if len(linha)>5 else ""), (linha[6] if len(linha)>6 else "")
+        b64_ass = linha[7] if len(linha)>7 else ""
+        link_foto = linha[8] if len(linha)>8 else ""
+        
+        img_ass = base64_to_temp_img(b64_ass, "epi")
+        img_foto = baixar_foto_drive(link_foto)
+        
+        pdf_bytes = criar_pdf_epi(obra, nome, funcao, data_str, epi, qtd, ca, img_ass, img_foto, pdf_batch)
+        nome_arquivo = f"EPI_{nome.replace(' ', '_')}.pdf"
+        if img_ass: os.remove(img_ass)
+        if img_foto: os.remove(img_foto)
+
+    # CESTA/ARMARIO: [Data, Obra, Nome, Funcao, B64_Ass]
+    elif nome_aba in ["CESTA", "ARMARIO"]:
+        data_str, obra, nome, funcao = linha[0], linha[1], linha[2], linha[3]
+        b64_ass = linha[4] if len(linha)>4 else ""
+        img_ass = base64_to_temp_img(b64_ass, nome_aba)
+        if nome_aba == "CESTA": pdf_bytes = criar_pdf_cesta(obra, nome, funcao, data_str, img_ass, pdf_batch)
+        else: pdf_bytes = criar_pdf_armario(obra, nome, funcao, data_str, img_ass, pdf_batch)
+        nome_arquivo = f"{nome_aba}_{nome.replace(' ', '_')}.pdf"
+        if img_ass: os.remove(img_ass)
+
+    # FARDAMENTO: [Data, Obra, Nome, Funcao, Item_fard, Qtd, B64_Ass]
+    elif nome_aba == "FARDAMENTO":
+        data_str, obra, nome, funcao = linha[0], linha[1], linha[2], linha[3]
+        item_fard, qtd = (linha[4] if len(linha)>4 else ""), (linha[5] if len(linha)>5 else "")
+        b64_ass = linha[6] if len(linha)>6 else ""
+        img_ass = base64_to_temp_img(b64_ass, "fard")
+        pdf_bytes = criar_pdf_fardamento(obra, nome, funcao, item_fard, qtd, data_str, img_ass, pdf_batch)
+        nome_arquivo = f"Fardamento_{nome.replace(' ', '_')}.pdf"
+        if img_ass: os.remove(img_ass)
+
+    # OS: [Data, DataIn, Obra, Nome, Funcao, Texto, B64_1, B64_2]
+    elif nome_aba == "OS":
+        data_str, data_in, obra, nome, funcao = linha[0], linha[1], linha[2], linha[3], linha[4]
+        texto_os = linha[5] if len(linha)>5 else ""
+        b64_1, b64_2 = (linha[6] if len(linha)>6 else ""), (linha[7] if len(linha)>7 else "")
+        img_1, img_2 = base64_to_temp_img(b64_1, "os1"), base64_to_temp_img(b64_2, "os2")
+        pdf_bytes = criar_pdf_os(obra, nome, funcao, data_in, texto_os, data_str, img_1, img_2, pdf_batch)
+        nome_arquivo = f"OS_{nome.replace(' ', '_')}.pdf"
+        if img_1: os.remove(img_1)
+        if img_2: os.remove(img_2)
+
+    # INTEGRACAO: [Data, Obra, Nome, Funcao, Texto, B64_1, B64_2]
+    elif nome_aba == "INTEGRACAO":
+        data_str, obra, nome, funcao = linha[0], linha[1], linha[2], linha[3]
+        texto = linha[4] if len(linha)>4 else ""
+        b64_1, b64_2 = (linha[5] if len(linha)>5 else ""), (linha[6] if len(linha)>6 else "")
+        img_1, img_2 = base64_to_temp_img(b64_1, "int1"), base64_to_temp_img(b64_2, "int2")
+        pdf_bytes = criar_pdf_integracao(obra, nome, funcao, data_str, texto, img_1, img_2, pdf_batch)
+        nome_arquivo = f"Integracao_{nome.replace(' ', '_')}.pdf"
+        if img_1: os.remove(img_1)
+        if img_2: os.remove(img_2)
+
+    # TREINAMENTO: [Data, Descricao, Instrutor, Local, Carga, Validade, Nome, Funcao, B64_Ass]
+    elif nome_aba == "TREINAMENTO":
+        data_str, desc, instrutor, local = linha[0], linha[1], linha[2], linha[3]
+        carga, val, nome, funcao = linha[4], linha[5], linha[6], linha[7]
+        b64_ass = linha[8] if len(linha)>8 else ""
+        img_ass = base64_to_temp_img(b64_ass, "treina")
+        pdf_bytes = criar_pdf_treinamento(desc, instrutor, data_str, local, carga, val, nome, funcao, img_ass, pdf_batch)
+        nome_arquivo = f"Treinamento_{nome.replace(' ', '_')}.pdf"
+        if img_ass: os.remove(img_ass)
+
+    return pdf_bytes, nome_arquivo
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # MÓDULOS DE ACOMPANHAMENTO E GERADOR DE PDF
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 def render_acomp_obra():
@@ -805,13 +887,13 @@ def render_acomp_editar():
                         planilha = conectar_planilha(nome_aba)
                         planilha.update(f"A{linha_idx}", [novos_dados])
                         st.cache_data.clear()
-                        st.markdown('<div style="background-color: rgba(227, 112, 38, 0.1); border-left: 4px solid #E37026; padding: 15px; color: #E37026; border-radius: 5px; margin-bottom: 1rem;"><strong>Sucesso:</strong> Registro atualizado! Clique em <b>Sincronizar Base</b>.</div>', unsafe_allow_html=True)
+                        st.markdown('<div style="background-color: rgba(227, 112, 38, 0.1); border-left: 4px solid #E37026; padding: 15px; color: #E37026; border-radius: 5px; margin-bottom: 1rem;"><strong>⚠️ Sucesso:</strong> Registro atualizado! Clique em <b>Sincronizar Base</b>.</div>', unsafe_allow_html=True)
                 if submit_excluir:
                     with st.spinner("A excluir a linha do Google Sheets..."):
                         planilha = conectar_planilha(nome_aba)
                         planilha.delete_rows(linha_idx)
                         st.cache_data.clear()
-                        st.markdown('<div style="background-color: rgba(227, 112, 38, 0.1); border-left: 4px solid #E37026; padding: 15px; color: #E37026; border-radius: 5px; margin-bottom: 1rem;"><strong>Sucesso:</strong> Registro excluído! Clique em <b>Sincronizar Base</b>.</div>', unsafe_allow_html=True)
+                        st.markdown('<div style="background-color: rgba(227, 112, 38, 0.1); border-left: 4px solid #E37026; padding: 15px; color: #E37026; border-radius: 5px; margin-bottom: 1rem;"><strong>⚠️ Sucesso:</strong> Registro excluído! Clique em <b>Sincronizar Base</b>.</div>', unsafe_allow_html=True)
 
 def render_acomp_gerar_pdf():
     st.header("GERAR PDF", divider="orange")
@@ -836,119 +918,85 @@ def render_acomp_gerar_pdf():
             identificador = " - ".join(linha[:3]) if len(linha) >= 3 else f"Registro {i}"
             opcoes_registros.append(f"Linha {i} | {identificador}")
             
-        registro_selecionado = st.selectbox("2. SELECIONE O CADASTRO E CLIQUE EM GERAR", opcoes_registros)
+        st.markdown("<br>", unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
         
-        if registro_selecionado != "Selecione um registro para gerar o PDF...":
+        with col1:
+            st.markdown("<div style='background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 10px; border: 1px solid rgba(227, 112, 38, 0.15); height: 100%;'>", unsafe_allow_html=True)
+            st.markdown("<h4 style='color:#E37026; font-size: 1rem;'>📄 Gerar Individual</h4>", unsafe_allow_html=True)
+            registro_selecionado = st.selectbox("SELECIONE O CADASTRO", opcoes_registros)
+            btn_gerar_individual = st.button("RECONSTRUIR ÚNICO", use_container_width=True)
+            st.markdown("</div>", unsafe_allow_html=True)
+            
+        with col2:
+            st.markdown("<div style='background: rgba(255, 255, 255, 0.02); padding: 15px; border-radius: 10px; border: 1px solid rgba(227, 112, 38, 0.15); height: 100%;'>", unsafe_allow_html=True)
+            st.markdown("<h4 style='color:#E37026; font-size: 1rem;'>📚 Gerar Lote por Obra</h4>", unsafe_allow_html=True)
+            
+            # Buscar obras únicas cadastradas neste módulo específico
+            obras_cadastradas = set()
+            for linha in registros[1:]:
+                if nome_aba in ["EPI", "CESTA", "ARMARIO", "FARDAMENTO", "INTEGRACAO"] and len(linha) >= 2: obras_cadastradas.add(linha[1])
+                elif nome_aba == "OS" and len(linha) >= 3: obras_cadastradas.add(linha[2])
+                
+            lista_obras = ["Todas as Obras"] + sorted(list(obras_cadastradas))
+            obra_selecionada = st.selectbox("SELECIONE A OBRA", lista_obras)
+            btn_lote = st.button("GERAR LOTE DA OBRA", use_container_width=True)
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        pdf_final_bytes = None
+        nome_arquivo_final = ""
+
+        if btn_gerar_individual and registro_selecionado != "Selecione um registro para gerar o PDF...":
             linha_idx = int(registro_selecionado.split(" ")[1])
             linha = registros[linha_idx - 1]
-            
-            if st.button("RECONSTRUIR DOCUMENTO PDF", type="primary", use_container_width=True):
-                with st.spinner("A reconstruir o PDF com os dados da nuvem..."):
-                    pdf_bytes = None
-                    nome_arquivo = f"Documento_{nome_aba}.pdf"
+            with st.spinner("A reconstruir o PDF individual com os dados da nuvem..."):
+                try:
+                    pdf_final_bytes, nome_arquivo_final = _processar_linha_pdf(nome_aba, linha)
+                except Exception as e:
+                    st.error(f"Erro: {e}")
+
+        elif btn_lote:
+            with st.spinner(f"A compilar lote de PDFs para '{obra_selecionada}'... Pode demorar alguns segundos."):
+                try:
+                    pdf_lote = FPDF()
+                    qtd_adicionados = 0
                     
-                    try:
-                        # EPI: [Data, Obra, Nome, Funcao, EPI, Qtd, CA, B64_Ass, LinkFoto]
-                        if nome_aba == "EPI":
-                            data_str, obra, nome, funcao = linha[0], linha[1], linha[2], linha[3]
-                            epi, qtd, ca = (linha[4] if len(linha)>4 else ""), (linha[5] if len(linha)>5 else ""), (linha[6] if len(linha)>6 else "")
-                            b64_ass = linha[7] if len(linha)>7 else ""
-                            link_foto = linha[8] if len(linha)>8 else ""
+                    for linha in registros[1:]:
+                        obra_linha = ""
+                        if nome_aba in ["EPI", "CESTA", "ARMARIO", "FARDAMENTO", "INTEGRACAO"] and len(linha) >= 2: obra_linha = linha[1]
+                        elif nome_aba == "OS" and len(linha) >= 3: obra_linha = linha[2]
+                        
+                        if obra_selecionada != "Todas as Obras" and obra_linha != obra_selecionada and nome_aba != "TREINAMENTO":
+                            continue
                             
-                            img_ass = base64_to_temp_img(b64_ass, "epi")
-                            img_foto = baixar_foto_drive(link_foto)
-                            
-                            pdf_bytes = criar_pdf_epi(obra, nome, funcao, data_str, epi, qtd, ca, img_ass, img_foto)
-                            nome_arquivo = f"EPI_{nome.replace(' ', '_')}.pdf"
-                            if img_ass: os.remove(img_ass)
-                            if img_foto: os.remove(img_foto)
+                        _processar_linha_pdf(nome_aba, linha, pdf_batch=pdf_lote)
+                        qtd_adicionados += 1
+                        
+                    if qtd_adicionados > 0:
+                        pdf_final_bytes = pdf_lote.output()
+                        nome_arquivo_final = f"Lote_{nome_aba}_{obra_selecionada.replace(' ', '_')}.pdf"
+                    else:
+                        st.warning(f"Nenhum registro encontrado para a obra '{obra_selecionada}'.")
+                except Exception as e:
+                    st.error(f"Erro ao processar lote: {e}")
 
-                        # CESTA/ARMARIO: [Data, Obra, Nome, Funcao, B64_Ass]
-                        elif nome_aba in ["CESTA", "ARMARIO"]:
-                            data_str, obra, nome, funcao = linha[0], linha[1], linha[2], linha[3]
-                            b64_ass = linha[4] if len(linha)>4 else ""
-                            img_ass = base64_to_temp_img(b64_ass, nome_aba)
-                            if nome_aba == "CESTA": pdf_bytes = criar_pdf_cesta(obra, nome, funcao, data_str, img_ass)
-                            else: pdf_bytes = criar_pdf_armario(obra, nome, funcao, data_str, img_ass)
-                            nome_arquivo = f"{nome_aba}_{nome.replace(' ', '_')}.pdf"
-                            if img_ass: os.remove(img_ass)
+        if pdf_final_bytes:
+            st.session_state['pdf_gerado_sob_demanda'] = bytes(pdf_final_bytes)
+            st.session_state['nome_pdf_sob_demanda'] = nome_arquivo_final
+            st.rerun()
 
-                        # FARDAMENTO: [Data, Obra, Nome, Funcao, Item_fard, Qtd, B64_Ass]
-                        elif nome_aba == "FARDAMENTO":
-                            data_str, obra, nome, funcao = linha[0], linha[1], linha[2], linha[3]
-                            item_fard, qtd = (linha[4] if len(linha)>4 else ""), (linha[5] if len(linha)>5 else "")
-                            b64_ass = linha[6] if len(linha)>6 else ""
-                            img_ass = base64_to_temp_img(b64_ass, "fard")
-                            pdf_bytes = criar_pdf_fardamento(obra, nome, funcao, item_fard, qtd, data_str, img_ass)
-                            nome_arquivo = f"Fardamento_{nome.replace(' ', '_')}.pdf"
-                            if img_ass: os.remove(img_ass)
-
-                        # OS: [Data, DataIn, Obra, Nome, Funcao, Texto, B64_1, B64_2]
-                        elif nome_aba == "OS":
-                            data_str, data_in, obra, nome, funcao = linha[0], linha[1], linha[2], linha[3], linha[4]
-                            texto_os = linha[5] if len(linha)>5 else ""
-                            b64_1, b64_2 = (linha[6] if len(linha)>6 else ""), (linha[7] if len(linha)>7 else "")
-                            img_1, img_2 = base64_to_temp_img(b64_1, "os1"), base64_to_temp_img(b64_2, "os2")
-                            pdf_bytes = criar_pdf_os(obra, nome, funcao, data_in, texto_os, data_str, img_1, img_2)
-                            nome_arquivo = f"OS_{nome.replace(' ', '_')}.pdf"
-                            if img_1: os.remove(img_1)
-                            if img_2: os.remove(img_2)
-
-                        # INTEGRACAO: [Data, Obra, Nome, Funcao, Texto, B64_1, B64_2]
-                        elif nome_aba == "INTEGRACAO":
-                            data_str, obra, nome, funcao = linha[0], linha[1], linha[2], linha[3]
-                            texto = linha[4] if len(linha)>4 else ""
-                            b64_1, b64_2 = (linha[5] if len(linha)>5 else ""), (linha[6] if len(linha)>6 else "")
-                            img_1, img_2 = base64_to_temp_img(b64_1, "int1"), base64_to_temp_img(b64_2, "int2")
-                            pdf_bytes = criar_pdf_integracao(obra, nome, funcao, data_str, texto, img_1, img_2)
-                            nome_arquivo = f"Integracao_{nome.replace(' ', '_')}.pdf"
-                            if img_1: os.remove(img_1)
-                            if img_2: os.remove(img_2)
-
-                        # TREINAMENTO: [Data, Descricao, Instrutor, Local, Carga, Validade, Nome, Funcao, B64_Ass]
-                        elif nome_aba == "TREINAMENTO":
-                            data_str, desc, instrutor, local = linha[0], linha[1], linha[2], linha[3]
-                            carga, val, nome, funcao = linha[4], linha[5], linha[6], linha[7]
-                            b64_ass = linha[8] if len(linha)>8 else ""
-                            img_ass = base64_to_temp_img(b64_ass, "treina")
-                            pdf_bytes = criar_pdf_treinamento(desc, instrutor, data_str, local, carga, val, nome, funcao, img_ass)
-                            nome_arquivo = f"Treinamento_{nome.replace(' ', '_')}.pdf"
-                            if img_ass: os.remove(img_ass)
-
-                    except Exception as e:
-                        st.error(f"Erro ao processar dados da nuvem para o PDF: {e}")
-                    
-                    if pdf_bytes:
-                        st.session_state['pdf_gerado_sob_demanda'] = bytes(pdf_bytes)
-                        st.session_state['nome_pdf_sob_demanda'] = nome_arquivo
-                        st.rerun()
-
-        if 'pdf_gerado_sob_demanda' in st.session_state:
-            st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
-            st.success("✓ Documento legal reconstruído com sucesso.")
-            st.download_button("↓ BAIXAR DOCUMENTO (PDF)", data=st.session_state['pdf_gerado_sob_demanda'], file_name=st.session_state['nome_pdf_sob_demanda'], mime="application/pdf", use_container_width=True)
+    if 'pdf_gerado_sob_demanda' in st.session_state:
+        st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+        st.success(f"✓ Documento '{st.session_state['nome_pdf_sob_demanda']}' gerado com sucesso.")
+        st.download_button("↓ BAIXAR DOCUMENTO (PDF)", data=st.session_state['pdf_gerado_sob_demanda'], file_name=st.session_state['nome_pdf_sob_demanda'], mime="application/pdf", use_container_width=True)
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # APP PRINCIPAL E NAVEGAÇÃO
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 def app():
-    inject_custom_css()
     if 'autenticado' not in st.session_state: st.session_state['autenticado'] = False
     if not st.session_state['autenticado']: render_login()
     else:
-        import streamlit.components.v1 as components
-        components.html(
-            """
-            <script>
-            var sidebar = window.parent.document.querySelector('[data-testid="stSidebar"]');
-            if (sidebar && sidebar.getAttribute("aria-expanded") === "false") {
-                var btn = window.parent.document.querySelector('[data-testid="collapsedControl"]');
-                if (btn) btn.click();
-            }
-            </script>
-            """, height=0, width=0
-        )
-        
         if 'prev_menu_cadastro' not in st.session_state: st.session_state.prev_menu_cadastro = 'ENTREGA DE EPI'
         if 'prev_menu_acomp' not in st.session_state: st.session_state.prev_menu_acomp = 'OBRA'
         if 'active_view' not in st.session_state: st.session_state.active_view = 'ENTREGA DE EPI'
@@ -966,7 +1014,7 @@ def app():
             try: st.image('assets/logo.png', use_container_width=True)
             except: pass
             st.markdown("")
-            st.markdown('<div class="sidebar-logo-container"><div class="sidebar-logo-text">SST</div><div class="sidebar-logo-sub">Segurança e Saúde do Trabalho</div></div>', unsafe_allow_html=True)
+            st.markdown('<div class="sidebar-logo-container"><div class="sidebar-logo-text">SST</div><div class="sidebar-logo-sub">Segurança do Trabalho</div></div>', unsafe_allow_html=True)
             st.markdown("")
 
             menu_cadastro = option_menu(
@@ -992,7 +1040,7 @@ def app():
                 st.session_state['autenticado'] = False
                 st.cache_data.clear() # Limpa os dados se fizer logout
                 st.rerun()
-            st.markdown('<p class="sidebar-footer">Lavie Construções e Incorporações</p>', unsafe_allow_html=True)
+            st.markdown('<p class="sidebar-footer">Lavie Core Enterprise v2.5</p>', unsafe_allow_html=True)
 
         if menu_cadastro != st.session_state.prev_menu_cadastro or menu_acomp != st.session_state.prev_menu_acomp:
             st.session_state.active_view = menu_cadastro if menu_cadastro != st.session_state.prev_menu_cadastro else menu_acomp
